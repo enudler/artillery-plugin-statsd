@@ -25,8 +25,8 @@ function StatsDPlugin(rawConfig, ee) {
     debug('Flattened Stats Report: '+JSON.stringify(flattenedStats));
 
     l.each(flattenedStats, function(value, name) {
-      debug('Reporting: '+name+'  '+value)
-      metrics.gauge(config.prefix+'.'+name, value || config.defaultValue);
+      debug('Reporting: '+name+'  '+value);
+      metrics.gauge(config.prefix+'.'+name+config.tags, value || config.defaultValue);
     });
 
   });
@@ -114,9 +114,10 @@ function _reconcileConfigs(config){
      prefix: config.plugins.statsd.prefix || 'artillery',
      closingTimeout: config.plugins.statsd.timeout || 0,
      defaultValue: config.plugins.statsd.default || 0,
-     skipList: _generateSkipList(config.plugins.statsd.skipList),
+      skipList: _generateSkipList(config.plugins.statsd.skipList),
     // This is used for testing the plugin interface
-     enableUselessReporting: config.plugins.statsd.enableUselessReporting
+     enableUselessReporting: config.plugins.statsd.enableUselessReporting,
+     tags: config.plugins.statsd.tags ? ',' + config.plugins.statsd.tags : ''
   }
 }
 

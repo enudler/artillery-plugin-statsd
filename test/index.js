@@ -22,7 +22,8 @@ test('defaults are overridable', function (t) {
         port: 8126,
         prefix: 'someprefix',
         timeout: 10,
-        default: 100000
+        default: 100000,
+          tags: 'region:eu,host:10.0.0.1'
       }
     }
   };
@@ -33,6 +34,7 @@ test('defaults are overridable', function (t) {
   t.equal(reconciledConfigs.prefix, 'someprefix', 'Prefix someprefix');
   t.equal(reconciledConfigs.closingTimeout, 10, 'Timeout 10');
   t.equal(reconciledConfigs.defaultValue, 100000, 'DefaultValue 100000');
+    t.equal(reconciledConfigs.tags, ',region:eu,host:10.0.0.1', '');
 
   t.end();
 });
